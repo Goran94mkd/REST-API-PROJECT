@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const events = require('events');
 const emitter = new events.EventEmitter();
 
-module.exports = () => {
+module.exports = () => { 
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -35,10 +35,9 @@ module.exports = () => {
   }
 
   emitter
-    .on('product_created', data => {
+    .on('blogpost_created', data => {
       sendMail();
     })
 
-  emitter.emit('product_created')
-
+  emitter.emit('blogpost_created')
 }
