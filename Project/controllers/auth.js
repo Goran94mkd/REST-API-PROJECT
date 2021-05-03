@@ -87,7 +87,7 @@ module.exports = {
       const user = await userModel.findById(req.params.id);
       if (!user) errorResponse(res, 400, 'No user with the provided id')
 
-      const date = new Date('2021-05-03T04:08:00.000+1:30');
+      const date = new Date('2021-05-03T04:10:00.000+1:30');
 
       schedule.scheduleJob(date, function () {
         console.log('I jas si gazam');
