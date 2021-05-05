@@ -5,7 +5,6 @@ const blogPostsRouter = require('./routers/blogposts');
 const categoriesRouter = require('./routers/categories');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
-var cron = require('node-cron');
 
 app.use(express.json());
 

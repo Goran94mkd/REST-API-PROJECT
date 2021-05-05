@@ -72,7 +72,7 @@ module.exports = {
     try {
       const user = await userModel.find()
 
-      cron.schedule('*/5 * * * * *', () => {
+      cron.schedule('*/30 * * * * *', () => {
         console.log('Scheduler running');
         shell.exec("node lib/cron.js")
       });
@@ -87,10 +87,11 @@ module.exports = {
       const user = await userModel.findById(req.params.id);
       if (!user) errorResponse(res, 400, 'No user with the provided id')
 
-      const date = new Date('2021-05-03T04:10:00.000+1:30');
+      const date = new Date('2021-05-16:40:00.000+1:30');
 
-      schedule.scheduleJob(date, function () {
-        console.log('I jas si gazam');
+      const job = schedule.scheduleJob(date, function () {
+        console.log('Node - Schedule: I jas si gazam');
+        job.cancel()
       });
 
       successResponse(res, `User with id #${req.params.id}`, user);
