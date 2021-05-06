@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const events = require('events');
 const emitter = new events.EventEmitter();
 
-module.exports = () => { 
+module.exports = () => {
 
   const transporter = nodemailer.createTransport({
     service: 'hotmail',

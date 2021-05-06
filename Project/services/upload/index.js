@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const uploadRouter = require('./routers/upload');
+const jwt = require('express-jwt');
+const errorResponse = require('../../lib/error-response-sender');
+
 app.use(express.json());
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
@@ -8,9 +12,21 @@ mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useUnifiedTopology: true,
 });
 
-app.use('/upload', (req, res) => { 
-  res.send('This is the upload service')
-});
+app.use(jwt({
+  secret: '3218943205PADSOKDASI(*#$U(',
+  algorithms: ['HS256']
+}));
+
+app.use((err, req, res, next) => {
+  console.log(err, err.name, err.name === 'UnauthorizedError')
+  if (err.name === 'UnauthorizedError') {
+    errorResponse(res, 401, 'You need to log in to perform this action');
+  }
+})
+
+app.use('/upload', uploadRouter);
+
+
 
 app.listen("3001", (error) => {
   if (error) {
