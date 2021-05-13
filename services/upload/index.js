@@ -1,14 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const blogPostsRouter = require('./routers/blogposts');
-const categoriesRouter = require('./routers/categories');
+const uploadRouter = require('./routers/upload');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
 app.use(express.json());
-
-
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useNewUrlParser: true,
@@ -18,12 +15,6 @@ mongoose.connect("mongodb://localhost/ws-gen-11-project", {
 app.use(jwt({
   secret: '3218943205PADSOKDASI(*#$U(',
   algorithms: ['HS256']
-}).unless({
-  path: [
-    {
-      url: '/blogposts', methods: ['GET']
-    }
-  ]
 }));
 
 app.use((err, req, res, next) => {
@@ -33,15 +24,14 @@ app.use((err, req, res, next) => {
   }
 })
 
-app.use('/blogposts', blogPostsRouter);
-app.use('/categories', categoriesRouter);
+app.use('/upload', uploadRouter);
 
-app.listen("3000", (error) => {
+app.listen("3001", (error) => {
   if (error) {
     return console.log(
-      "Error happened while starting the app on port 3000: ",
+      "Error happened while starting the app on port 3001: ",
       error
     );
   }
-  console.log("Blog service successfully started on port 3000");
+  console.log("Upload service successfully started on port 3001");
 });

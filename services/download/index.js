@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const v1 = require('./routers/v1');
+const downloadRouter = require('./routers/download');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
@@ -15,31 +15,23 @@ mongoose.connect("mongodb://localhost/ws-gen-11-project", {
 app.use(jwt({
   secret: '3218943205PADSOKDASI(*#$U(',
   algorithms: ['HS256']
-}).unless({
-  path: [
-    {
-      url: '/api/v1/auth/login', methods: ['POST']
-    },
-    {
-      url: '/api/v1/auth/register', methods: ['POST']
-    }
-  ]
 }));
 
 app.use((err, req, res, next) => {
+  console.log(err, err.name, err.name === 'UnauthorizedError')
   if (err.name === 'UnauthorizedError') {
-    errorResponse(res, 401, `You need to log in to perform this action. ${err.message}`);
+    errorResponse(res, 401, 'You need to log in to perform this action');
   }
-});
+})
 
-app.use('/api/v1/auth', v1);
+app.use('/download', downloadRouter);
 
-app.listen("3003", (error) => {
+app.listen("3002", (error) => {
   if (error) {
     return console.log(
-      "Error happened while starting the app on port 3003: ",
+      "Error happened while starting the app on port 3002: ",
       error
     );
   }
-  console.log("Auth service successfully started on port 3003");
+  console.log("Download service successfully started on port 3002");
 });

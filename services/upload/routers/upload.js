@@ -1,5 +1,5 @@
 const express = require('express');
-const { upload } = require('../../../lib/fileHelper');
+const { upload } = require('../../../lib/fileUploadHelper');
 const router = express.Router();
 const controller = require('../../../controllers/upload');
 

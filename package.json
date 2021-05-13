@@ -8,7 +8,8 @@
     "blog": "nodemon services/blog",
     "upload": "nodemon services/upload",
     "auth": "nodemon services/auth",
-    "all": "npm-run-all --parallel blog upload auth"
+    "download": "nodemon services/download",
+    "all": "npm-run-all --parallel blog upload auth download"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,4 @@
-const {blogPostModel} = require('../models/blog-post&user')
+const { blogPostModel } = require('../models/blog-post&user')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
 const mailer = require('../lib/mailer')
@@ -22,7 +22,7 @@ module.exports = {
         .populate('category', 'name')
         .populate('user', ['email', 'full_name'])
 
-      if (!blogPost) errorResponse(res, 400, 'No user with the provided id') 
+      if (!blogPost) errorResponse(res, 400, 'No user with the provided id')
 
       successResponse(res, `Post with id #${req.params.id}`, blogPost);
     } catch (error) {
@@ -32,12 +32,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const blogPost = await blogPostModel.create(req.body);
-
-      if (blogPost) {
-        mailer()
-      }
-
-
+      if (blogPost) { mailer(req.user.email) }
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)
@@ -74,5 +69,27 @@ module.exports = {
     } catch (error) {
       res.send({ message: error });
     }
-  }
+  },
+  like: async (req, res) => {
+    try {
+      const post = await blogPostModel.findById(req.params.id);
+      if (!post.likes.includes(req.user.id)) {
+        await post.updateOne({ $push: { likes: req.user.id } });
+        res.status(200).json("The post has been liked");
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  dislike: async (req, res) => {
+    try {
+      const post = await blogPostModel.findById(req.params.id);
+      if (post.likes.includes(req.user.id)) {
+        await post.updateOne({ $pull: { likes: req.user.id } });
+        res.status(200).json("The post has been disliked");
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 }
