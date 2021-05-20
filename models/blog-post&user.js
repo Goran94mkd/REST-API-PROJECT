@@ -20,6 +20,10 @@ var blogPostSchema = mongoose.Schema({
   likes: {
     type: Array,
     default: []
+  },
+  city: {
+    type: mongoose.Types.ObjectId,
+    ref: "City"
   }
 });
 

@@ -9,12 +9,14 @@
     "upload": "nodemon services/upload",
     "auth": "nodemon services/auth",
     "download": "nodemon services/download",
-    "all": "npm-run-all --parallel blog upload auth download"
+    "weather": "nodemon services/weather",
+    "all": "npm-run-all --parallel blog upload auth download weather"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",

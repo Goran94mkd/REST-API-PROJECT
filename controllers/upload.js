@@ -1,5 +1,5 @@
 const SingleFile = require('../models/singlefile');
-const MultipleFile = require('../models/multifile');
+const MultipleFile = require('../models/multipleFiles');
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
 

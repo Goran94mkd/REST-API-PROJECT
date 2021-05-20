@@ -14,7 +14,7 @@ module.exports = {
   fetchOne: async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
-      if (!category) errorResponse(res, 400, 'No user with the provided id')
+      if (!category) errorResponse(res, 400, 'No category with the provided id')
       
       successResponse(res, `Category with id #${req.params.id}`, category);
     } catch (error) {
