@@ -1,7 +1,9 @@
 const { blogPostModel } = require('../models/blog-post&user')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
-const mailer = require('../lib/mailer')
+const sendMail = require('../lib/mails/mailgun');
+const createPDF = require('../lib/mails/pdf')
+const path = require('path')
 const axios = require('axios');
 
 const getWeatherData = async (cityName) => {
@@ -52,7 +54,24 @@ module.exports = {
     try {
       const blogPost = await blogPostModel.create(req.body);
 
-      if (blogPost) { mailer(req.user.email) }
+      if (blogPost) {
+        createPDF(blogPost);
+
+        const filepath = path.join(__dirname, `../pdfs/blogpost-${blogPost._id}.pdf`);
+        const data = {
+          from: "test@test.com",
+          to: "ws-gen-11@outlook.com", // req.user.email
+          subject:'Discount 50% !',
+          template: "motor",
+          attachment: filepath
+        };
+
+        // TODO: Remove after promisification of the createPDF method
+        setTimeout(() => {
+          sendMail(data)
+        }, 2000);
+      }
+      
       successResponse(res, 'New blog post created', blogPost);
     } catch (error) {
       errorResponse(res, 500, error.message)

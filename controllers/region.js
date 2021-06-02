@@ -1,7 +1,7 @@
 const Region = require('../models/region')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
-const regionWeatherByCoordinates = require('../lib/region-weather-by-coordinates')
+const regionWeatherByCoordinates = require('../lib/openweather-api/region-weather-by-coordinates')
 
 module.exports = {
   fetchAll: async (req, res) => {

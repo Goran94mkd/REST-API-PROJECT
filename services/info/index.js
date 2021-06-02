@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const uploadRouter = require('./routers/upload');
+const basketballRouter = require('./routers/basketball');
+const footballRouter = require('./routers/football')
+const newsRouter = require('./routers/news');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
@@ -26,14 +28,16 @@ app.use((err, req, res, next) => {
   }
 })
 
-app.use('/upload', uploadRouter);
+app.use('/basketball', basketballRouter);
+app.use('/football', footballRouter)
+app.use('/news', newsRouter)
 
-app.listen(`${process.env.UPLOAD_API_PORT}`, (error) => {
+app.listen(`${process.env.INFO_API_PORT}`, (error) => {
   if (error) {
     return console.log(
-      `Error happened while starting the app on port ${process.env.UPLOAD_API_PORT}: `,
+      `Error happened while starting the app on port ${process.env.INFO_API_PORT}: `,
       error
     );
   }
-  console.log(`Upload service successfully started on port ${process.env.UPLOAD_API_PORT}`);
+  console.log(`Info service successfully started on port ${process.env.INFO_API_PORT}`);
 });

@@ -1,8 +1,8 @@
 const Location = require('../models/location')
 const successResponse = require('../lib/success-response-sender');
 const errorResponse = require('../lib/error-response-sender');
-const locationWeatherByCoordinates = require ('../lib/location-weather-by-coordinates')
-const locationPollutionByCoordinates = require('../lib/location-pollution-by-coordinates')
+const locationWeatherByCoordinates = require ('../lib/openweather-api/location-weather-by-coordinates')
+const locationPollutionByCoordinates = require('../lib/openweather-api/location-pollution-by-coordinates')
 
 module.exports = {
   fetchAll: async (req, res) => {

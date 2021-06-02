@@ -6,7 +6,10 @@ const usersRouter = require('./routers/users');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
+require('dotenv').config()
+
 app.use(express.json());
+
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
   useNewUrlParser: true,
@@ -37,12 +40,12 @@ app.use('/api/v1/auth', v1);
 app.use('/users', usersRouter);
 
 
-app.listen("3003", (error) => {
+app.listen(`${process.env.AUTH_API_PORT}`, (error) => {
   if (error) {
     return console.log(
-      "Error happened while starting the app on port 3003: ",
+      `Error happened while starting the app on port ${process.env.AUTH_API_PORT}`,
       error
     );
   }
-  console.log("Auth service successfully started on port 3003");
+  console.log(`Auth service successfully started on port ${process.env.AUTH_API_PORT}`);
 });

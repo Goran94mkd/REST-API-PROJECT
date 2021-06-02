@@ -3,7 +3,7 @@ const errorResponse = require('../lib/error-response-sender');
 const { userModel } = require('../models/blog-post&user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const mailer = require('../lib/mailer');
+const mailer = require('../lib/mails/nodemailer');
 
 module.exports = {
   register: async (req, res) => {

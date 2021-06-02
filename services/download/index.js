@@ -5,6 +5,8 @@ const downloadRouter = require('./routers/download');
 const jwt = require('express-jwt');
 const errorResponse = require('../../lib/error-response-sender');
 
+require('dotenv').config()
+
 app.use(express.json());
 
 mongoose.connect("mongodb://localhost/ws-gen-11-project", {
@@ -26,12 +28,12 @@ app.use((err, req, res, next) => {
 
 app.use('/download', downloadRouter);
 
-app.listen("3002", (error) => {
+app.listen(`${process.env.DOWNLOAD_API_PORT}`, (error) => {
   if (error) {
     return console.log(
-      "Error happened while starting the app on port 3002: ",
+      `Error happened while starting the app on port ${process.env.DOWNLOAD_API_PORT}: `,
       error
     );
   }
-  console.log("Download service successfully started on port 3002");
+  console.log(`Download service successfully started on port ${process.env.DOWNLOAD_API_PORT}`);
 });
